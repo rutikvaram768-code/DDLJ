@@ -12,21 +12,22 @@ function protectCredits(config) {
 
 module.exports.config = {
   name: "arif",
-  version: "4.0.0",
+  version: "4.1.0",
   hasPermssion: 0,
   credits: "ARIF BABU",
   description: "ARIF BABU AI",
   commandCategory: "ai",
-  usages: "bot | bot text",
+  usages: "bot | bot text | reply",
   cooldowns: 2,
   dependencies: { axios: "" }
 };
 
 protectCredits(module.exports.config);
 
-// 🔑 API
+// 🔑 OPENROUTER API KEY (APNI REAL KEY LAGAO)
 const OPENROUTER_API_KEY = "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";
 
+// 🌐 API URL
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 // 📁 PATHS
@@ -36,16 +37,17 @@ if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
 const HISTORY_FILE = path.join(DATA_DIR, "ai_history.json");
 const BOT_REPLY_FILE = path.join(DATA_DIR, "bot-reply.json");
 
-// 🧠 LOAD DATA
+// 🧠 LOAD HISTORY
 let historyData = fs.existsSync(HISTORY_FILE)
   ? JSON.parse(fs.readFileSync(HISTORY_FILE, "utf8"))
   : {};
 
+// 🤖 LOAD BOT REPLIES
 let botReplies = fs.existsSync(BOT_REPLY_FILE)
   ? JSON.parse(fs.readFileSync(BOT_REPLY_FILE, "utf8"))
   : {};
 
-// 🤖 FREE MODELS
+// 🤖 FREE MODELS (AUTO SWITCH)
 const MODELS = [
   "mistralai/mistral-7b-instruct:free",
   "meta-llama/llama-3-8b-instruct:free",
@@ -56,9 +58,9 @@ const MODELS = [
 const systemPrompt = `
 Tum ARIF BABU ke personal AI ho.
 User jis language me bole usi me reply do.
-Reply EXACT 2 lines ka ho.
-Tone friendly aur caring ho.
-ARIF BABU ki burai mat sunna.
+Reply hamesha EXACT 2 LINES ka ho.
+Tone friendly, caring aur apna-sa ho.
+ARIF BABU ki burai bilkul mat sunna.
 Brackets ka use mat karo.
 `;
 
@@ -73,7 +75,7 @@ module.exports.handleEvent = async function ({ api, event }) {
   const rawText = body.trim();
   const text = rawText.toLowerCase();
 
-  // 🟢 BOT CONDITIONS
+  // 🟢 BOT CALL CONDITIONS
   const fixedBot =
     text === "bot" ||
     text === "bot." ||
@@ -87,7 +89,7 @@ module.exports.handleEvent = async function ({ api, event }) {
     messageReply.senderID === api.getCurrentUserID();
 
   // =========================
-  // 🤖 FIXED BOT REPLY
+  // 🤖 FIXED BOT REPLY (bot-reply.json)
   // =========================
   if (fixedBot && !botWithText) {
     let category = "MALE";
@@ -138,16 +140,21 @@ module.exports.handleEvent = async function ({ api, event }) {
     });
 
     fs.writeFileSync(HISTORY_FILE, JSON.stringify(historyData, null, 2));
-  } catch {
+
+  } catch (err) {
+    console.log("❌ AI ERROR:", err.message);
     api.sendMessage(
-      "Abhi thoda busy ho gaya hoon 😔\nThodi der baad try karna ❤️",
+      "Abhi thoda busy ho gaya hoon 😔\nThodi der baad phir try karna ❤️",
       threadID,
       messageID
     );
+    api.setMessageReaction("❌", messageID, () => {}, true);
   }
 };
 
-// 🔁 AI FUNCTION
+// =========================
+// 🔁 AI FUNCTION (FIXED)
+// =========================
 async function askAI(messages) {
   for (const model of MODELS) {
     try {
@@ -165,21 +172,31 @@ async function askAI(messages) {
         {
           headers: {
             Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://openrouter.ai/",
+            "X-Title": "ARIF BABU AI BOT"
+          },
+          timeout: 20000
         }
       );
 
       let text =
-        res.data.choices?.[0]?.message?.content ||
-        "Main yahin hoon\nTum bolo kya chahiye";
+        res.data?.choices?.[0]?.message?.content ||
+        "Main yahin hoon 😊\nTum bolo kya chahiye ❤️";
 
       let lines = text.split("\n").filter(l => l.trim());
       if (lines.length < 2)
-        lines.push("Main tumhari madad ke liye yahin hoon");
+        lines.push("Main tumhari madad ke liye yahin hoon ❤️");
 
       return lines.slice(0, 2).join("\n");
-    } catch {}
+
+    } catch (e) {
+      console.log("❌ MODEL FAILED:", model);
+      if (e.response?.data) {
+        console.log(JSON.stringify(e.response.data));
+      }
+    }
   }
-  throw new Error("AI failed");
+
+  throw new Error("All models failed");
 }
