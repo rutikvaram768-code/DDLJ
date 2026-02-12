@@ -67,9 +67,9 @@ module.exports. run = function({ api, event, args, getText }) {
     for (let item of returnArray) msg += `🥀  [${++i}] → ${prefix}${item} ♥️ \n`;
 
 
-    const siu = `┏━━━━━┓\n    SHAAN-KHAN-K                   ✧═══•❁😛❁•═══✧\n┗━━━━━┛\n\n\n✧═══❁♥️TOTAL COMMAND LIST ♥️❁═══✧`;
+    const siu = `┏━━━━━┓\n    𝐒𝐇𝐀𝐀𝐍-𝐊𝐇𝐀𝐍-𝐊                   ✧═══•❁😛❁•═══✧\n┗━━━━━┛\n\n\n✧═══❁♥️𝐀𝐥𝐥 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐋𝐈𝐒𝐓 ♥️❁═══✧`;
 
- const text = `PAGE 𒁍  [ ${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)} ]\n\nOR COMMAND KE LIYE HAI MENU TYPE KRO\nTHIS BOT IS MADE BYE MR SHAAN BABU 🙂✌️\n\n\n\n❁ ═════ ❃SHAAN-BABU❃ ═════ ❁`;
+ const text = `PAGE 🥀  [ ${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)} ]\n\𝐎𝐔𝐑 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐊𝐄 𝐋𝐈𝐘𝐄  𝐌𝐄𝐍𝐔 𝐋𝐈𝐊𝐇𝐎 \𝐓𝐇𝐈𝐒 𝐁𝐎𝐓 𝐈𝐒 𝐌𝐀𝐃𝐄 𝐁𝐘𝐄  𝐒𝐇𝐀𝐀𝐍-𝐊𝐇𝐀𝐍=𝐊 🙂✌️\n\n\n\n🕊️ ═════ 💋𝐒𝐇𝐀𝐀𝐍-𝐊𝐇𝐀𝐍💋 ═════ 🕊️`;
 
     return api.sendMessage(siu + "\n\n" + msg  + text, threadID, async (error, info) => {
       if (autoUnsend) {
