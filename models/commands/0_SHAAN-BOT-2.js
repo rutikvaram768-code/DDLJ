@@ -1,4 +1,4 @@
-const extraTriggers = {
+11111const extraTriggers = {
   MALE: [
     { match: ["ek kisi tu udhaar de de", "kiss me", "kiss de", "chuma de ek"], reply: "Please don’t say such things bro 🙏🙂" },
     { match: ["👍", "👍🏻"], reply: "Okay bro 👍🙂" },
