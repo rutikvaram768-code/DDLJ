@@ -2,10 +2,10 @@ const axios = require("axios");
 
 module.exports.config = {
   name: "hercai",
-  version: "2.5.0",
+  version: "2.5.1",
   hasPermission: 0,
   credits: "Shaan Khan", 
-  description: "Persistent Multi-Script AI - Locked Language Mode",
+  description: "Persistent Multi-Script AI - Optimized for Speed",
   commandCategory: "AI",
   usePrefix: false,
   usages: "[Bot ke message par reply karein]",
@@ -24,6 +24,7 @@ module.exports.handleEvent = async function ({ api, event }) {
   const { threadID, messageID, senderID, body, messageReply } = event;
   if (!isActive || !body) return;
 
+  // Reply check: Bot ke message par reply hona chahiye
   if (!messageReply || messageReply.senderID !== api.getCurrentUserID()) return;
 
   api.setMessageReaction("⌛", messageID, () => {}, true);
@@ -34,23 +35,26 @@ module.exports.handleEvent = async function ({ api, event }) {
 
   const conversationHistory = userMemory[senderID].join("\n");
   
-  // **Strict Language Persistence Prompt**
-  const systemPrompt = `You are an AI by Shaan Khan.
-  RULES:
-  1. Default is Roman Urdu.
-  2. If the user asks for a specific language/script (Pashto, Urdu script, Hindi script, etc.), you must SWITCH to that script and REMAIN in that script for all future replies.
-  3. DO NOT switch back to Roman Urdu unless the user explicitly says "Roman mein baat karo" or "Switch to Roman".
-  4. Even if the user continues to chat in Roman Urdu, your responses must stay in the last requested native script.
+  const systemPrompt = `You are an AI by Shaan Khan. 
+  RULES: Default Roman Urdu. If user asks for another language (Pashto, Urdu script, etc.), switch and stay in that script.
   Context: ${conversationHistory}`;
 
-  // Using 'search' or 'mistral' for maximum speed
-  const apiURL = `https://text.pollinations.ai/${encodeURIComponent(systemPrompt + "\nUser: " + userQuery)}?model=search&seed=${Math.random()}`;
+  // Model ko 'mistral' par set kiya hai kyunki ye 'search' se zyada fast aur stable hai
+  const apiURL = `https://text.pollinations.ai/${encodeURIComponent(systemPrompt + "\nUser: " + userQuery)}?model=mistral&seed=${Math.random()}`;
 
   try {
-    const response = await axios.get(apiURL, { timeout: 15000 });
-    let botReply = response.data || "Server slow hai, dubara try karein.";
+    const response = await axios.get(apiURL, { 
+      timeout: 20000, // 20 seconds timeout
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-    // Memory for context (6 messages for speed)
+    let botReply = response.data;
+
+    if (!botReply || botReply.trim() === "") {
+      throw new Error("Empty response from API");
+    }
+
+    // Memory management (Limit to 6 lines for performance)
     userMemory[senderID].push(`U: ${userQuery}`);
     userMemory[senderID].push(`B: ${botReply}`);
     if (userMemory[senderID].length > 6) userMemory[senderID].splice(0, 2);
@@ -59,8 +63,13 @@ module.exports.handleEvent = async function ({ api, event }) {
     return api.sendMessage(botReply, threadID, messageID);
 
   } catch (error) {
+    console.error("Hercai Error:", error.message); // Terminal check ke liye
     api.setMessageReaction("❌", messageID, () => {}, true);
-    return api.sendMessage("❌ Speed issue! Dubara koshish karein.", threadID, messageID);
+    
+    let errorMsg = "❌ Server Busy! Dubara koshish karein.";
+    if (error.code === 'ECONNABORTED') errorMsg = "❌ Connection Timeout! Internet ya API slow hai.";
+    
+    return api.sendMessage(errorMsg, threadID, messageID);
   }
 };
 
