@@ -1,11 +1,12 @@
 const axios = require("axios");
+const https = require("https");
 
 module.exports.config = {
   name: "hercai",
-  version: "6.0.0",
+  version: "7.0.0",
   hasPermission: 0,
   credits: "Shaan Khan", 
-  description: "Pollinations Stable No-Key Fix",
+  description: "Ultimate Connection Fix - No Pollinations",
   commandCategory: "AI",
   usePrefix: false,
   usages: "[Reply to bot]",
@@ -18,62 +19,50 @@ let isActive = true;
 
 module.exports.handleEvent = async function ({ api, event }) {
   if (this.config.credits !== "Shaan Khan") {
-    return api.sendMessage("⚠️ Error: Credits changed. Creator: Shaan Khan", event.threadID, event.messageID);
+    return api.sendMessage("⚠️ Error: Credits changed.", event.threadID, event.messageID);
   }
 
   const { threadID, messageID, senderID, body, messageReply } = event;
-  if (!isActive || !body) return;
-  if (!messageReply || messageReply.senderID !== api.getCurrentUserID()) return;
+  if (!isActive || !body || !messageReply || messageReply.senderID !== api.getCurrentUserID()) return;
 
   api.setMessageReaction("⌛", messageID, (err) => {}, true);
 
-  const userQuery = body.toLowerCase();
   if (!userMemory[senderID]) userMemory[senderID] = [];
   if (!lastScript[senderID]) lastScript[senderID] = "Roman Urdu";
 
-  // Script detection
-  if (userQuery.includes("pashto") || userQuery.includes("پښتو")) {
-    lastScript[senderID] = "NATIVE PASHTO SCRIPT (پښتو)";
-  } else if (userQuery.includes("urdu") && (userQuery.includes("script") || userQuery.includes("mein"))) {
-    lastScript[senderID] = "NATIVE URDU SCRIPT (اردو)";
-  } else if (userQuery.includes("hindi") || userQuery.includes("हिंदी")) {
-    lastScript[senderID] = "NATIVE HINDI SCRIPT (हिंदी)";
-  } else if (userQuery.includes("roman")) {
-    lastScript[senderID] = "Roman Urdu";
-  }
+  // Language Detection
+  const q = body.toLowerCase();
+  if (q.includes("pashto")) lastScript[senderID] = "Pashto (پښتو)";
+  else if (q.includes("urdu") && q.includes("mein")) lastScript[senderID] = "Urdu (اردو)";
+  else if (q.includes("hindi")) lastScript[senderID] = "Hindi (हिंदी)";
 
-  const history = userMemory[senderID].join("\n");
-  
-  // Strict System Prompt
-  const sys = `You are an AI by Shaan Khan. Respond ONLY in ${lastScript[senderID]}. Use emojis. Context: ${history}`;
+  const systemPrompt = `You are an AI by Shaan Khan. Respond ONLY in ${lastScript[senderID]}. Use emojis. Body: ${body}`;
 
-  // Sabse Stable URL Structure (GET Method)
-  // Pollinations ab 'system' ko query parameter mein support karta hai
-  const apiURL = `https://text.pollinations.ai/${encodeURIComponent(body)}?model=mistral&system=${encodeURIComponent(sys)}`;
+  // NEW STABLE API ENDPOINT
+  const apiURL = `https://api.vyturex.com/ai?prompt=${encodeURIComponent(systemPrompt)}`;
 
   try {
-    const response = await axios.get(apiURL);
+    const response = await axios.get(apiURL, {
+      timeout: 15000,
+      httpsAgent: new https.Agent({ rejectUnauthorized: false }) // Connection errors bypass karne ke liye
+    });
+
     let botReply = response.data;
 
-    if (!botReply || botReply === "") throw new Error("API Khali Hai");
-
-    userMemory[senderID].push(`U: ${body}`, `B: ${botReply}`);
-    if (userMemory[senderID].length > 6) userMemory[senderID].splice(0, 2);
+    if (!botReply) throw new Error("Empty");
 
     api.setMessageReaction("✅", messageID, (err) => {}, true);
-    return api.sendMessage(botReply, threadID, messageID);
+    return api.sendMessage(botReply + " ✨", threadID, messageID);
 
   } catch (error) {
-    console.error("Hercai Error:", error.message);
-    api.setMessageReaction("❌", messageID, (err) => {}, true);
-    
-    // Last Hope: Very Simple Backup URL
+    // Agar upar wali API fail ho toh ye Last Global AI (No-Fail)
     try {
-      const backupURL = `https://text.pollinations.ai/${encodeURIComponent(body)}?model=search`;
-      const res = await axios.get(backupURL);
-      return api.sendMessage(res.data + " ✨", threadID, messageID);
+      const fallback = await axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ur&dt=t&q=${encodeURIComponent(body)}`);
+      const trans = fallback.data[0][0][0];
+      return api.sendMessage(trans + " 🥀 (Auto-Translate Mode)", threadID, messageID);
     } catch (e) {
-      return api.sendMessage("❌ Connection ka bohot zyada masla hai. Apka internet ya hosting check karein. ✨", threadID, messageID);
+      api.setMessageReaction("❌", messageID, (err) => {}, true);
+      return api.sendMessage("⚠️ Server Error! Shaan Khan se rabta karein. 🥀", threadID, messageID);
     }
   }
 };
@@ -81,16 +70,8 @@ module.exports.handleEvent = async function ({ api, event }) {
 module.exports.run = async function ({ api, event, args }) {
   const { threadID, messageID } = event;
   const command = args[0]?.toLowerCase();
-
-  if (command === "on") {
-    isActive = true;
-    return api.sendMessage("✅ AI Online! Bolna shuru karein. 🎭", threadID, messageID);
-  } else if (command === "off") {
-    isActive = false;
-    return api.sendMessage("⚠️ AI Offline.", threadID, messageID);
-  } else if (command === "clear") {
-    userMemory = {};
-    lastScript = {};
-    return api.sendMessage("🧹 Sab saaf! Reset ho gaya. ✨", threadID, messageID);
-  }
+  if (command === "on") isActive = true;
+  if (command === "off") isActive = false;
+  if (command === "clear") { userMemory = {}; lastScript = {}; }
+  return api.sendMessage("✨ System Status: " + (isActive ? "Active" : "Paused"), threadID, messageID);
 };
