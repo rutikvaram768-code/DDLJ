@@ -45,7 +45,7 @@ function getVideoID(url) {
 
 /* ⚙ CONFIG */
 module.exports.config = {
-  name: "song",
+  name: "music",
   version: "1.3.5",
   credits: "Shaan Khan", // Updated credit
   hasPermssion: 0,
