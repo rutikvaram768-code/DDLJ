@@ -3,7 +3,7 @@ module.exports.config = {
   name: "Kiss",
     version: "1.1.1",
   hasPermssion: 0,
-  credits: "SHAAN BABU", 
+  credits: "RUTIK BABU", 
   description: "Just Respond",
   commandCategory: "no prefix",
     cooldowns: 5, 
@@ -17,7 +17,7 @@ module.exports.handleEvent = function({ api, event, client, __GLOBAL }) {
 react.includes("kiss me") ||
 react.includes("KISS YOU")) {
     var msg = {
-        body: `𝑰 𝑲𝑰𝑺𝑺 𝒀𝑶𝑼 𝑻𝑶𝑶 𝑩𝑨𝑩𝒀 💋🙊💞`,attachment: fs.createReadStream(__dirname + `/SHAN-KHAN/KISS-YOU.gif`)
+        body: `𝑰 𝑲𝑰𝑺𝑺 𝒀𝑶𝑼 𝑻𝑶𝑶 𝑩𝑨𝑩𝒀 💋🙊💞`,attachment: fs.createReadStream(__dirname + `/RUTIK-VARMA/KISS-YOU.gif`)
       }
       api.sendMessage(msg, threadID, messageID);
     api.setMessageReaction("💋", event.messageID, (err) => {}, true)
