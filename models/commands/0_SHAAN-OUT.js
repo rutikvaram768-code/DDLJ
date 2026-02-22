@@ -2,7 +2,7 @@ module.exports.config = {
     name: "out",
     version: "1.0.0",
     hasPermssion: 2,
-    credits: "SHAAN BABU",
+    credits: "RUTIK BABU",
     description: "THIS BOT WAS MADE BY MR SHAAN",
     commandCategory: "BOT ID OUT OF THE GROUP",
     usages: "PREFIX",
