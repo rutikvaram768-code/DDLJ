@@ -25,14 +25,14 @@ module.exports.handleEvent = async ({ api, event, Users }) => {
     // Time formatting for Asia/Karachi
     const formattedTime = currentDate.toLocaleTimeString('en-US', { 
       hour12: true, 
-      timeZone: 'Asia/Karachi' 
+      timeZone: 'mumbai/India' 
     });
     const formattedDate = currentDate.toLocaleDateString('en-GB', { 
       timeZone: 'Asia/Karachi' 
     });
     const formattedDay = currentDate.toLocaleDateString('en-US', { 
       weekday: 'long', 
-      timeZone: 'Asia/Karachi' 
+      timeZone: 'mumbai/India' 
     });
 
     // Dynamic Owner Name Fetching
@@ -57,7 +57,7 @@ module.exports.handleEvent = async ({ api, event, Users }) => {
                             `✰ 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀 ➪ ${totalCommands} 📊\n` +
                             `✰ 𝗢𝘄𝗻𝗲𝗿 ➪ ${ownerName} 👑\n\n` +
                             `┗━━━━━━━━━━━━━━━━━━━━━━━┛\n` +
-                            `𝗠𝗔𝗗𝗘 𝗕𝗬 ❤️‍🔥 𝗦𝗛𝗔𝗔𝗡 𝗞𝗛𝗔𝗡`;
+                            `𝗠𝗔𝗗𝗘 𝗕y ✮⃝❤≛⃝ 𝐑𝐔𝐓𝐈𝐊──────亗🕊️ `;
 
     return api.sendMessage(responseMessage, event.threadID, event.messageID);
   }
