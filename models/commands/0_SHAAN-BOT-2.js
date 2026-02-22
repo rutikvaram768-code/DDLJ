@@ -10,7 +10,7 @@
     { match: ["koi hai", "koi h"], reply: "Yes bro, I am here 😊" },
     { match: ["....", "..."], reply: "Arif bro is busy, tell me what you need 😊" },
     { match: ["boss", "kiska bot hai"], reply: "I am Arif Babu’s bot bro 😊" },
-    { match: ["bot admin", "bot ka admin kon hai"], reply: "Admin is Arif Babu bro 🙏" },
+    { match: ["bot admin", "bot ka admin kon hai"], reply: "Admin is Rutik Babu bro 🙏" },
     { match: ["🙈"], reply: "Why are you feeling shy bro 😅" },
     { match: ["sadi karoge", "mujhse shadi karoge?"], reply: "Don’t joke like that bro 😅🙏" },
     { match: ["bot gandu", "gandu bot"], reply: "Please don’t abuse bro 🙏🙂" },
@@ -25,8 +25,8 @@
     { match: ["😷", "🤕", "🤧", "🤒"], reply: "Take care bro 🙏🙂" },
     { match: ["naam kya", "name kya"], reply: "I am a bot bro 😊" },
     { match: ["😉"], reply: "What’s up bro? 😄" },
-    { match: ["😏"], reply: "Yes bro? 🙂" },
-    { match: ["😱", "😨"], reply: "What happened bro? 😳" },
+    { match: ["😏"], reply: "hanji babu? ☺️" },
+    { match: ["😱", "😨"], reply: "What happened babu? 😳" },
     { match: ["🙄"], reply: "Don’t look like that bro 😅" },
     { match: ["😒"], reply: "What happened bro? Are you upset? 🙂" },
     { match: ["🤦🏻‍♂", "🤦🏻‍♀"], reply: "What happened bro? 😊" },
@@ -49,8 +49,8 @@
     { match: ["manshi", "manshi babu"], reply: "Please take Mansi’s name respectfully ma’am 🙏" },
     { match: ["koi hai", "koi h"], reply: "Yes ma’am, I am here 😊" },
     { match: ["....", "..."], reply: "Arif sir is busy, please tell me ma’am 😊" },
-    { match: ["boss", "kiska bot hai"], reply: "I am Arif Babu’s bot ma’am 👸✨" },
-    { match: ["bot admin", "bot ka admin kon hai"], reply: "Admin is Arif Babu ma’am 😊🙏" },
+    { match: ["boss", "kiska bot hai"], reply: "I am Rutik Babu’s bot ma’am 👸✨" },
+    { match: ["bot admin", "bot ka admin kon hai"], reply: "Admin is Rutik Babu ma’am 😊🙏" },
     { match: ["🙈"], reply: "Why are you shy ma’am 😅✨" },
     { match: ["sadi karoge", "mujhse shadi karoge?"], reply: "Please don’t say this ma’am 🙏🙂" },
     { match: ["bot gandu", "gandu bot"], reply: "Please don’t abuse ma’am 🙏" },
@@ -80,7 +80,7 @@
   ],
 
   OWNER: [
-    { match: ["hi", "hello", "hlw", "helo"], reply: "My lovely owner Arif Babu 😍👑" },
+    { match: ["hi", "hello", "hlw", "helo"], reply: "My lovely owner Rutik Babu 😍👑" },
     { match: ["koi hai", "koi h"], reply: "Yes boss, I am here 😊" },
     { match: ["👍", "👍🏻"], reply: "Okay my boss 👍😌" },
     { match: ["🤮", "🤮🤮"], reply: "Boss are you okay? 😟🙏" },
@@ -88,8 +88,8 @@
     { match: ["bc"], reply: "Boss please don’t abuse 🙏🙂" },
     { match: ["manshi", "manshi babu"], reply: "Boss, please take Mansi’s name with love 😊" },
     { match: ["....", "..."], reply: "Boss, tell me what you need 😊" },
-    { match: ["boss", "kiska bot hai"], reply: "I belong only to Arif Babu 👑" },
-    { match: ["bot admin", "bot ka admin kon hai"], reply: "My owner is Arif Babu 👑" },
+    { match: ["boss", "kiska bot hai"], reply: "I belong only to Rutik Babu 👑" },
+    { match: ["bot admin", "bot ka admin kon hai"], reply: "My owner is Rutik Babu 👑" },
     { match: ["🙈"], reply: "Why are you shy boss 😅" },
     { match: ["sadi karoge", "mujhse shadi karoge?"], reply: "Boss, you are joking 😅👑" },
     { match: ["bot gandu", "gandu bot"], reply: "Boss please don’t abuse 🙏🙂" },
@@ -120,10 +120,10 @@
 };
 
 module.exports.config = {
-  name: "SHAAN-EMOJI-REPLY",
+  name: "RUTIK-EMOJI-REPLY",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "SHAAN BABU",
+  credits: "Rutik babu",
   description: "Gender based auto reply",
   commandCategory: "Auto",
   cooldowns: 0,
@@ -138,7 +138,7 @@ module.exports.handleEvent = async function ({ api, event }) {
   const user = ThreadInfo.userInfo.find(u => u.id === senderID);
 
   const gender =
-    senderID === "100016828397863"
+    senderID === "100066537167169 "
       ? "OWNER"
       : user?.gender === "FEMALE"
       ? "FEMALE"
