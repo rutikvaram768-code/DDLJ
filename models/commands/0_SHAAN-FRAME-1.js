@@ -3,7 +3,7 @@ module.exports.config = {
     version: "7.3.1",
     hasPermssion: 0,
     credits: "SHAAN BABU", 
-    description: "THIS BOT WAS MADE BY MR SHAAN BABU",
+    description: "THIS BOT WAS MADE BY MR RUTIK BABU",
     commandCategory: "PROFILE DP FRAME",
     usages: "PREFIX MENTIONS",
     cooldowns: 5,
