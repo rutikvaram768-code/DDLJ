@@ -2,7 +2,7 @@ module.exports.config = {
         name: "outall",
         version: "1.0.0",
         hasPermssion: 2,
-        credits: "SHAAN KHAN ",
+        credits: "RUTIK BABU ",
         description: "Bot leaves all groups except the current one",
         commandCategory: "Admin",
         usages: "outall",
@@ -11,7 +11,7 @@ module.exports.config = {
 
 module.exports.run = async ({ api, event, args }) => {
     // Yaha apna admin ID check karein
-    const permission = ["100016828397863", "", ""];
+    const permission = ["100066537167169", "", ""];
     
     if (!permission.includes(event.senderID))
         return api.sendMessage("Sorry boss, mujhe sirf mere Rutik varma hi saare groups se leave karwa sakte hain 🙂✌️", event.threadID, event.messageID);
