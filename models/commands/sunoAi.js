@@ -21,7 +21,7 @@ module.exports.run = async function ({ api, event, args }) {
   // Case 1: अगर सिर्फ +sona लिखा गया है और कोई रिप्लाई नहीं है
   if (args.length === 0 && !event.messageReply) {
     return api.sendMessage(
-      `Hy main Sona hu our Shaan ne banaya hai our Han 💕\nAap kaise ho ${userName} 😘`,
+      `Hy main Sona hu our 𝐑𝐮𝐭𝐢𝐤 ne banaya hai our Han 💕\nAap kaise ho ${userName} 😘`,
       threadID,
       messageID
     );
@@ -65,7 +65,7 @@ module.exports.run = async function ({ api, event, args }) {
     const sonaReply = res.data || "😅 Mujhe samajh nahi aaya baby...";
 
     api.sendMessage(
-      `Hi ${userName} Shaan ❤️\n${sonaReply}`,
+      `Hi ${userName} 𝐑𝐮𝐭𝐢𝐤 ❤️\n${sonaReply}`,
       threadID,
       messageID
     );
