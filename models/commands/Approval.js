@@ -117,7 +117,7 @@ module.exports.run = async ({ event, api, args, Threads, handleReply, Users }) =
         let ext = res.data.url.substring(res.data.url.lastIndexOf(".") + 1);
         let callback = function () {
       api.sendMessage({body: `❒❒ 💐𝐁𝐀𝐁𝐘 𝐁𝐎𝐓 𝐀𝐑𝐄 𝐍𝐎𝐖 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃💐 ❒❒\n=====================\n┏━━━━ 🖤 ━━━━┓
-  ✦❥⋆⃝𝐌𝐑.𝐒𝐇𝐀𝐀𝐍 シ︎
+  ✦❥⋆⃝𝐌𝐑.⎯⃛〬𓆩❤️𓆪꯭ ⤹³♡︎𝐑𝐔𝐓𝐈𝐊ː͢ ꯭𓆩❤️𓆪⎯⃛〬 シ︎
 
 ┗━━━    🖤 ━━━━┛\n=====================\n➪ BOT: ${global.config.BOTNAME}\n➪ Prefix: ${global.config.PREFIX}\n➪ Users: ${global.data.allUserID.length}\n➪ Groups: ${global.data.allThreadID.length}\n=====================\n[]---------------------------------------[]\nUse '${global.config.PREFIX}Help' T0o View The Commands That Available! 💖\n[]---------------------------------------[]\n⌨ Made by: ${firstname}\n`, mentions: [{
                            tag: firstname,
