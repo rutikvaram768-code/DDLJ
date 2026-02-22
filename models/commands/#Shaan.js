@@ -13,13 +13,13 @@ module.exports.handleEvent = async ({ api, event, Users, Currencies, args, utils
   var name = await Users.getNameUser(event.senderID);
   var { threadID, messageID } = event;
   let react = event.body.toLowerCase();
-  if(react.includes("shan khan") ||
-     react.includes("Shaan Khan") || react.includes("SHAAN") || react.includes("shaan") ||
-react.includes("shan") ||
-react.includes("SHAAN KHAN") ||     
-react.includes("Shaan")) {
+  if(react.includes("Rutik varma") ||
+     react.includes("rutik varma") || react.includes("Rutik") || react.includes("Rutik") ||
+react.includes("rutik") ||
+react.includes("Rutik varma") ||     
+react.includes("rutik")) {
     var msg = {
-        body: `${name} 𝐘𝐀𝐑 𝐒𝐇𝐀𝐀𝐍 𝐊𝐎 𝐌𝐄𝐍𝐓𝐈𝐎𝐍 𝐍𝐀 𝐊𝐀𝐑𝐎 𝐌𝐔𝐉𝐇𝐄 𝐒𝐇𝐀𝐑𝐀𝐌 𝐀𝐀𝐓𝐈 𝐇𝐀𝐈🙈🙈🙈`,attachment: fs.createReadStream(__dirname + `/noprefix//1711811285337.jpg`)
+        body: `${name} 𝐘𝐀𝐑 ⎯⃛〬𓆩❤️𓆪꯭ ⤹³♡︎𝐑𝐔𝐓𝐈𝐊ː͢ ꯭𓆩❤️𓆪⎯⃛〬 𝐊𝐎 𝐌𝐄𝐍𝐓𝐈𝐎𝐍 𝐍𝐀 𝐊𝐀𝐑𝐎 𝐌𝐔𝐉𝐇𝐄 𝐒𝐇𝐀𝐑𝐀𝐌 𝐀𝐀𝐓𝐈 𝐇𝐀𝐈🙈🙈🙈`,attachment: fs.https://www.facebook.com/share/p/1C2F1qBfZB/(__dirname + `/noprefix//1711811285337.jpg`)
       }
       api.sendMessage(msg, threadID, messageID);
     api.setMessageReaction("💋", event.messageID, (err) => {}, true)
