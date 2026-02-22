@@ -3,7 +3,7 @@ module.exports.config = {
         version: "1.0.1", 
         hasPermssion: 1,
         credits: "SHAAN KHAN",
-        description: "THIS BOT WAS MADE BY MR SHAAN KHAN",
+        description: "THIS BOT WAS MADE BY MR RUTIK",
         commandCategory: "KICK MEMBER", 
         usages: "mention", 
         cooldowns: 0,
